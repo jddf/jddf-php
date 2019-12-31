@@ -50,14 +50,17 @@ final class ValidatorTest extends TestCase
     public function testValidateSpec(Jddf\Schema $schema, $instance, array $errors): void
     {
         $validator = new Jddf\Validator();
-        $this->assertEquals($errors, $validator->validate($schema, $instance));
+        $actualErrors = $validator->validate($schema, $instance);
+        sort($actualErrors);
+
+        $this->assertEquals($errors, $actualErrors);
     }
 
     public function validateSpecProvider(): array
     {
         $testCases = [];
 
-        foreach (glob('spec/tests/validation/002-ref.json') as $file) {
+        foreach (glob('spec/tests/validation/*.json') as $file) {
             foreach (json_decode(file_get_contents($file)) as $testSuite) {
                 $schema = Jddf\Schema::fromJson($testSuite->schema);
                 foreach ($testSuite->instances as $index => $testCase) {
@@ -71,6 +74,8 @@ final class ValidatorTest extends TestCase
 
                         $errors[] = new Jddf\ValidationError($instancePath, $schemaPath);
                     }
+
+                    sort($errors);
 
                     $testCases[$file.'/'.$testSuite->name.'/'.$index] = [$schema, $testCase->instance, $errors];
                 }
