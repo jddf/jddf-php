@@ -121,36 +121,45 @@ class Schema
         return $schema;
     }
 
-    public function verify(): self {
+    public function verify(): self
+    {
         return $this->verifyWithRoot($this);
     }
 
-    public function getForm(): string {
+    public function getForm(): string
+    {
         if (!is_null($this->ref)) {
-            return Form::$REF;
-        } else if (!is_null($this->type)) {
-            return Form::$TYPE;
-        } else if (!is_null($this->enum)) {
-            return Form::$ENUM;
-        } else if (!is_null($this->elements)) {
-            return Form::$ELEMENTS;
-        } else if (!is_null($this->properties) || !is_null($this->optionalProperties)) {
-            return Form::$PROPERTIES;
-        } else if (!is_null($this->values)) {
-            return Form::$VALUES;
-        } else if (!is_null($this->discriminator)) {
-            return Form::$DISCRIMINATOR;
-        } else {
-            return Form::$EMPTY;
+            return Form::REF;
         }
+        if (!is_null($this->type)) {
+            return Form::TYPE;
+        }
+        if (!is_null($this->enum)) {
+            return Form::ENUM;
+        }
+        if (!is_null($this->elements)) {
+            return Form::ELEMENTS;
+        }
+        if (!is_null($this->properties) || !is_null($this->optionalProperties)) {
+            return Form::PROPERTIES;
+        }
+        if (!is_null($this->values)) {
+            return Form::VALUES;
+        }
+        if (!is_null($this->discriminator)) {
+            return Form::DISCRIMINATOR;
+        }
+
+        return Form::EMPTY;
     }
 
-    private function verifyWithRoot(self $root): self {
+    private function verifyWithRoot(self $root): self
+    {
         $is_empty = true;
 
         if (!is_null($this->definitions)) {
             if ($this !== $root) {
-                throw new \InvalidArgumentException("definitions must only appear at root level");
+                throw new \InvalidArgumentException('definitions must only appear at root level');
             }
 
             foreach ($this->definitions as $value) {
@@ -160,19 +169,19 @@ class Schema
 
         if (!is_null($this->ref)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
 
             if (is_null($root->definitions) || !isset($root->definitions[$this->ref])) {
-                throw new \InvalidArgumentException("reference to non-existent definition");
+                throw new \InvalidArgumentException('reference to non-existent definition');
             }
         }
 
         if (!is_null($this->type)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
@@ -180,19 +189,19 @@ class Schema
 
         if (!is_null($this->enum)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
 
             if (count($this->enum) != count(array_unique($this->enum))) {
-                throw new \InvalidArgumentException("enum contains repated values");
+                throw new \InvalidArgumentException('enum contains repated values');
             }
         }
 
         if (!is_null($this->elements)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
@@ -202,21 +211,21 @@ class Schema
 
         if (!is_null($this->properties) || !is_null($this->optionalProperties)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
 
             if (!is_null($this->properties) && !is_null($this->optionalProperties)) {
                 if (!empty(array_intersect_key($this->properties, $this->optionalProperties))) {
-                    throw new \InvalidArgumentException("properties and optionalProperties share key");
+                    throw new \InvalidArgumentException('properties and optionalProperties share key');
                 }
             }
         }
 
         if (!is_null($this->values)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
@@ -226,7 +235,7 @@ class Schema
 
         if (!is_null($this->discriminator)) {
             if (!$is_empty) {
-                throw new \InvalidArgumentException("invalid schema form");
+                throw new \InvalidArgumentException('invalid schema form');
             }
 
             $is_empty = false;
@@ -234,8 +243,8 @@ class Schema
             foreach ($this->discriminator->mapping as $value) {
                 $value->verifyWithRoot($root);
 
-                if ($value->getForm() !== Form::$PROPERTIES) {
-                    throw new \InvalidArgumentException("discriminator mapping value is not of properties form");
+                if (Form::PROPERTIES !== $value->getForm()) {
+                    throw new \InvalidArgumentException('discriminator mapping value is not of properties form');
                 }
 
                 if (!is_null($value->properties) && isset($value->properties[$this->discriminator->tag])) {

@@ -51,16 +51,17 @@ final class SchemaTest extends TestCase
         $this->assertEquals('string', $schema->discriminator->mapping['foo']->type);
     }
 
-    public function testForm(): void {
-        $this->assertEquals(Jddf\Form::$EMPTY, Jddf\Schema::fromJson(json_decode('{}'))->getForm());
-        $this->assertEquals(Jddf\Form::$REF, Jddf\Schema::fromJson(json_decode('{"ref": ""}'))->getForm());
-        $this->assertEquals(Jddf\Form::$TYPE, Jddf\Schema::fromJson(json_decode('{"type": "int8"}'))->getForm());
-        $this->assertEquals(Jddf\Form::$ENUM, Jddf\Schema::fromJson(json_decode('{"enum": [""]}'))->getForm());
-        $this->assertEquals(Jddf\Form::$ELEMENTS, Jddf\Schema::fromJson(json_decode('{"elements": {}}'))->getForm());
-        $this->assertEquals(Jddf\Form::$PROPERTIES, Jddf\Schema::fromJson(json_decode('{"properties": {}}'))->getForm());
-        $this->assertEquals(Jddf\Form::$PROPERTIES, Jddf\Schema::fromJson(json_decode('{"optionalProperties": {}}'))->getForm());
-        $this->assertEquals(Jddf\Form::$VALUES, Jddf\Schema::fromJson(json_decode('{"values": {}}'))->getForm());
-        $this->assertEquals(Jddf\Form::$DISCRIMINATOR, Jddf\Schema::fromJson(json_decode('{"discriminator": {"tag": "", "mapping": {}}}'))->getForm());
+    public function testForm(): void
+    {
+        $this->assertEquals(Jddf\Form::EMPTY, Jddf\Schema::fromJson(json_decode('{}'))->getForm());
+        $this->assertEquals(Jddf\Form::REF, Jddf\Schema::fromJson(json_decode('{"ref": ""}'))->getForm());
+        $this->assertEquals(Jddf\Form::TYPE, Jddf\Schema::fromJson(json_decode('{"type": "int8"}'))->getForm());
+        $this->assertEquals(Jddf\Form::ENUM, Jddf\Schema::fromJson(json_decode('{"enum": [""]}'))->getForm());
+        $this->assertEquals(Jddf\Form::ELEMENTS, Jddf\Schema::fromJson(json_decode('{"elements": {}}'))->getForm());
+        $this->assertEquals(Jddf\Form::PROPERTIES, Jddf\Schema::fromJson(json_decode('{"properties": {}}'))->getForm());
+        $this->assertEquals(Jddf\Form::PROPERTIES, Jddf\Schema::fromJson(json_decode('{"optionalProperties": {}}'))->getForm());
+        $this->assertEquals(Jddf\Form::VALUES, Jddf\Schema::fromJson(json_decode('{"values": {}}'))->getForm());
+        $this->assertEquals(Jddf\Form::DISCRIMINATOR, Jddf\Schema::fromJson(json_decode('{"discriminator": {"tag": "", "mapping": {}}}'))->getForm());
     }
 
     public function specTestProvider(): array
