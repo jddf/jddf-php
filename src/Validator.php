@@ -52,13 +52,56 @@ class Vm
 
                 break;
             case Form::TYPE:
-                if (!is_string($instance)) {
-                    $this->pushSchemaToken('type');
-                    $this->pushError();
-                    $this->popSchemaToken();
+              $this->pushSchemaToken('type');
+              switch ($schema->type) {
+                  case 'boolean':
+                      if (!is_bool($instance)) {
+                          $this->pushError();
+                      }
+
+                      break;
+                  case 'float32':
+                  case 'float64':
+                      if (!is_float($instance) && !is_int($instance)) {
+                          $this->pushError();
+                      }
+
+                      break;
+                  case 'int8':
+                      $this->validateInt(-128, 127, $instance);
+                      break;
+                  case 'uint8':
+                    $this->validateInt(0, 255, $instance);
+                    break;
+                  case 'int16':
+                      $this->validateInt(-32768, 32767, $instance);
+                      break;
+                  case 'uint16':
+                    $this->validateInt(0, 65535, $instance);
+                    break;
+                  case 'int32':
+                      $this->validateInt(-2147483648, 2147483647, $instance);
+                      break;
+                  case 'uint32':
+                    $this->validateInt(0, 4294967295, $instance);
+                    break;
+                  case 'string':
+                      if (!is_string($instance)) {
+                          $this->pushError();
+                      }
+
+                      break;
+                  case 'timestamp':
+                      if (!is_string($instance) || false === \DateTime::createFromFormat(\DateTime::RFC3339_EXTENDED, $instance)) {
+                          $this->pushError();
+                      }
+
+                      break;
                 }
 
-                break;
+                $this->popSchemaToken();
+
+              break;
             case Form::ELEMENTS:
               $this->pushSchemaToken('elements');
                 if (is_array($instance)) {
@@ -74,6 +117,16 @@ class Vm
                 $this->popSchemaToken();
 
               break;
+        }
+    }
+
+    private function validateInt(float $min, float $max, $instance) {
+      if (is_int($instance) || is_float($instance)) {
+          if (floor($instance) !== (float) $instance || $instance < $min || $instance > $max) {
+              $this->pushError();
+          }
+        } else {
+          $this->pushError();
         }
     }
 
