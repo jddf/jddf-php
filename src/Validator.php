@@ -107,7 +107,7 @@ class Vm
 
                 $this->popSchemaToken();
 
-              break;
+                break;
             case Form::ENUM:
                 if (!in_array($instance, $schema->enum)) {
                     $this->pushSchemaToken('enum');
@@ -115,7 +115,7 @@ class Vm
                     $this->popSchemaToken();
                 }
 
-              break;
+                break;
             case Form::ELEMENTS:
               $this->pushSchemaToken('elements');
                 if (is_array($instance)) {
@@ -129,7 +129,7 @@ class Vm
                 }
                 $this->popSchemaToken();
 
-              break;
+                break;
             case Form::PROPERTIES:
                 if (is_object($instance)) {
                     if (!is_null($schema->properties)) {
@@ -191,7 +191,7 @@ class Vm
                     $this->popSchemaToken();
                 }
 
-            break;
+                break;
             case Form::VALUES:
                 $this->pushSchemaToken('values');
                 if (is_object($instance)) {
@@ -244,7 +244,7 @@ class Vm
 
                 $this->popSchemaToken();
 
-              break;
+                break;
         }
     }
 
