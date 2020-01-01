@@ -56,11 +56,10 @@ JSON);
 // and "phones[1]" has the wrong type.
 $inputBad = json_decode(<<<'JSON'
     {
-        "name": "John Doe",
-        "age":  43,
+        "age": "43",
         "phones": [
           "+44 1234567",
-          "+44 2345678",
+          442345678,
         ],
     }
 JSON);
