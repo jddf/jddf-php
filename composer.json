@@ -1,7 +1,7 @@
 {
   "name": "jddf/jddf",
   "description": "JSON Data Definition Format validation for PHP",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "test": "phpunit",
     "lint": "php-cs-fixer fix --dry-run --verbose --diff --allow-risky=yes",
