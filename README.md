@@ -1,4 +1,4 @@
-# jddf-php
+# jddf-php [![][packagist-badge]][packagist-url] [![][ci-badge]][ci-url]
 
 This package is a PHP implementation of **JSON Data Definition Format**. You can
 use this package to:
@@ -6,6 +6,11 @@ use this package to:
 1. Validate input data against a schema,
 2. Get a list of validation errors from that input data, or
 3. Build your own tooling on top of JSON Data Definition Format
+
+[packagist-badge]: https://img.shields.io/packagist/v/jddf/jddf
+[ci-badge]: https://github.com/jddf/jddf-php/workflows/PHP%20CI/badge.svg?branch=master
+[packagist-url]: https://packagist.org/packages/jddf/jddf
+[ci-url]: https://github.com/jddf/jddf-php/actions
 
 ## Installation
 
