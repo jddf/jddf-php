@@ -1,6 +1,7 @@
 {
   "name": "jddf/jddf",
   "description": "JSON Data Definition Format validation for PHP",
+  "license": "MIT",
   "version": "0.1.0",
   "scripts": {
     "test": "phpunit",
