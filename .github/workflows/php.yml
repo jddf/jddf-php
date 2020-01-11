@@ -14,4 +14,5 @@ jobs:
       - uses: shivammathur/setup-php@v1
         with:
           php-version: "7.4"
+      - run: composer dump-autoload
       - run: composer test
