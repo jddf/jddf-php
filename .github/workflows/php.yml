@@ -1,4 +1,4 @@
-name: CSharp CI
+name: PHP CI
 on: push
 jobs:
   build:
